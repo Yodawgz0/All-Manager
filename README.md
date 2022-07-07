@@ -7,9 +7,9 @@ It is an app which manages and track your things, i will keep adding the feature
                               To-Be Added
 ##########################################################################
 
-1. UI to acess the features in Flask
+1. C exe File 
 2. Access Device cross 
-3. Post and get data from a server/ db
+3. Python will be the backend for recving the data 
 
 
 
