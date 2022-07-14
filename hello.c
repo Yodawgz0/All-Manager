@@ -1,107 +1,62 @@
 #include <stdio.h>
 #include <winsock2.h>
-#include <Ws2tcpip.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <strings.h>
-#include <stddef.h>
 
-#define MAX 80
-
-void tranfer_data(int connfd)
-{
-	char buff[MAX];
-	int n;
-
-	for (;;)
-	{
-		memset(buff, 0, MAX);
-
-		printf('From Client: %d\t To Client:', buff);
-		memset(buff, 0, MAX);
-		n = 0;
-		// copy server message in the buffer
-		while ((buff[n++] == getchar()) != '\n')
-			;
-
-		// and send that buffer to client
-		write(connfd, buff, sizeof(buff));
-		// if msg contains "Exit" then server exit and chat ended.
-		if (strncmp("exit", buff, 4) == 0)
-		{
-			printf("Server Exit...\n");
-			break;
-		}
-	}
-}
+#pragma comment(lib, "ws2_32.lib") // Winsock Library
 
 int main(int argc, char *argv[])
 {
 	WSADATA wsa;
-	SOCKET server_socket, client_socket;
-	struct sockaddr_in server_addr, client_addr;
-	int c, iResult;
-	// initialzing the winsocket with version 2.0
-	iResult = WSAStartup(MAKEWORD(2, 0), &wsa);
+	SOCKET s, new_socket;
+	struct sockaddr_in server, client;
+	int c;
+	char *message;
 
-	if (iResult != 0)
+	printf("\nInitialising Winsock...");
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 	{
-		wprintf(L"Winsock startup failed with error %d\n", iResult);
+		printf("Failed. Error Code : %d", WSAGetLastError());
 		return 1;
 	}
+	printf("Initialised.\n");
 
-	server_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (server_socket == INVALID_SOCKET)
+	if ((s = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 	{
-		wprintf(L"socket failed with error %d\n", WSAGetLastError());
-		closesocket(server_socket);
-		WSACleanup();
-		return 1;
+		printf("Could not create socket : %d", WSAGetLastError());
 	}
 	printf("Socket created.\n");
 
-	memset(&server_addr, 0, sizeof(server_addr));
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(13000);
-	server_addr.sin_addr.s_addr = INADDR_ANY;
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = inet_addr("127.0.0.1");
+	server.sin_port = htons(80);
 
-	if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) == SOCKET_ERROR)
+	if (bind(s, (struct sockaddr *)&server, sizeof(server)) == SOCKET_ERROR)
 	{
 		printf("Bind failed with error code : %d", WSAGetLastError());
-		closesocket(server_socket);
-		WSACleanup();
-		return 1;
-	}
-	printf("Socket bound to port 13000.\n");
-
-	if (listen(server_socket, 1) == SOCKET_ERROR)
-	{
-		wprintf(L"Listen Failed with error: %d\n", WSAGetLastError());
-		closesocket(server_socket);
-		WSACleanup();
-		return 1;
-	}
-	for (;;)
-	{
 	}
 
-	printf("Waiting for incoming connection...\n");
+	puts("Bind done");
 
-	c = sizeof(client_addr);
-	client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &c);
+	listen(s, 3);
+	puts("Waiting for incoming connections...");
 
-	if (client_socket == INVALID_SOCKET)
+	c = sizeof(struct sockaddr_in);
+	while ((new_socket = accept(s, (struct sockaddr *)&client, &c)) != INVALID_SOCKET)
 	{
-		printf("Accept failed. Error Code: %d", WSAGetLastError());
-		closesocket(server_socket);
-		WSACleanup();
+		puts("Connection accepted");
+
+		// Reply to the client
+		message = "Hello Client , I have received your connection. But I have to go now, bye\n";
+		send(new_socket, message, strlen(message), 0);
+	}
+
+	if (new_socket == INVALID_SOCKET)
+	{
+		printf("accept failed with error code : %d", WSAGetLastError());
 		return 1;
 	}
 
-	printf("Client connected from %s:%hu\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+	closesocket(s);
+	WSACleanup();
 
-	tranfer_data(client_socket);
-
-	closesocket(server_socket);
+	return 0;
 }
