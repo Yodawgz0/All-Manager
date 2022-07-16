@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 	SOCKET s, new_socket;
 	struct sockaddr_in server, client;
 	int c, ipconfirm, connectionSuccess = 0;
-	char *message, ipadrrFinal[20], server_reply[12];
+	char *message, ipadrrFinal[20], server_reply[2000];
 	int recv_size;
 
 	while (1)
@@ -70,21 +70,17 @@ int main(int argc, char *argv[])
 
 		while (connectionSuccess == 0)
 		{
-			if ((recv_size = recv(s, server_reply, 12, 0)) == SOCKET_ERROR)
+			if (recv(new_socket, server_reply, 2000, 0) < 0)
 			{
-				puts("recv failed");
+				printf("Recv failed with error code : %d", WSAGetLastError());
 				closesocket(s);
 				WSACleanup();
 				return 1;
 			}
-			puts("Reply received\n");
+			printf("%s\n", server_reply);
 
 			message = "You are now connected to the Laptop , What is going to be your Next Move!! \n";
 			send(new_socket, message, strlen(message), 0);
-
-			// Add a NULL terminating character to make it a proper string before printing
-			server_reply[recv_size] = '\0';
-			puts(server_reply);
 			connectionSuccess = 1;
 		}
 	}
