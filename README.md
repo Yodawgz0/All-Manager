@@ -10,10 +10,9 @@ It is an app which manages and track your things, i will keep adding the feature
 1. C will be the one which data send, 
 2. Access Device cross 
 3. Python will be the backend for recving the data 
-4. Protocol Choosing option TCP/UDP
 5. Desktop side C 
 6. Mobile side python??
-7. Cl
+7. Choosing ipv4 as default for connection
 
 
 ##########################################################################
@@ -31,7 +30,7 @@ It is an app which manages and track your things, i will keep adding the feature
                                                                       @                   @
                               /||                                     @                   @                                     ||\
                              <  ===================================== @     Data Proc.    @ =====================================   > 
-                              \||                                     @                   @                                     ||/
+                              \||                                     @        (C)        @                                     ||/
                                                                       @                   @
                                                                       @@@@@@@@@@@@@@@@@@@@@
                                                                                 _
@@ -40,7 +39,7 @@ It is an app which manages and track your things, i will keep adding the feature
                                                                                | |
                                                                                | |
                                                                                | |
-                                                                               | |
+                                                                               | | (TCP Connection Estd.)
                                                                                | |
                                                                                | |
                                                                                | |
