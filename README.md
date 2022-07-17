@@ -47,9 +47,11 @@ It is an app which manages and track your things, i will keep adding the feature
                                                                                | |
                                                                                \_/
                                                                                 v
+                                                                                
+                                                               <<<< **Python App As API Handler** >>>
 
                                                                  ******************************
-                                  *******************************            Client            ***********************************
+                                  *******************************       React Native App       ***********************************
                                                                  ******************************
 
 
