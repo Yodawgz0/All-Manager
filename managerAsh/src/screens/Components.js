@@ -1,16 +1,30 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import React, { useState } from "react";
 
-const Componenets = () => {
-    return (
-        <Text style={styles.textStyle}> All Manger is about to Custom ! </Text>
-    );
+const Components = () => {
+  const [numberPin, onChangeNumberPin] = useState("");
+
+  return (
+    <View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={onChangeNumberPin}
+        value={numberPin}
+        placeholder="Enter The Pin"
+        keyboardType="numeric"
+      />
+      <Button title="Start" onPress={() => console.log("Hello")} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    textStyle: {
-        color: "red",
-    },
+  TextInput: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
 });
 
-export default Componenets;
+export default Components;

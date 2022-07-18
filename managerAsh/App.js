@@ -1,24 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import Componenets from "./src/screens/components";
-import FlatListComponent from "./src/screens/FlatListComponent";
+import FirstPage from "./src/screens/FirstPage";
 
 const App = () => {
   return (
     <View>
-
-      <Text style={styles.textStyle}> All Manger is about to start ! </Text>
-      <Componenets />
-      <FlatListComponent />
+      <FirstPage />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  textStyle: {
-    color: "red",
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
