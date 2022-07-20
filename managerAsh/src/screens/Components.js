@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   FirstPageButtonText: {
-    color: "white",
+    color: "pink",
   },
 });
 
