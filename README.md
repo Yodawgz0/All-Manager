@@ -49,7 +49,7 @@ It is an app which manages and track your things, i will keep adding the feature
                                                                                 v
                                                                                 
                                                                <<<< **Python App As API Handler** >>>
-                                                               <<<Multithreading for API and Flask>>>
+                                                             <<<  Multithreading for TCP and Flask  >>>
 
                                                                  ******************************
                                   *******************************       React Native App        ***********************************
