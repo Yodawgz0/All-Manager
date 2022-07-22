@@ -19,7 +19,7 @@ It is an app which manages and track your things, i will keep adding the feature
 1. In Phone select the Py file and run it
 2. Connect , after that i can select file and send
 
-                                                                  
+'''                                                                  
 
                                                                       @@@@@@@@@@@@@@@@@@@@@
    ======================                                             @                   @
@@ -54,5 +54,5 @@ It is an app which manages and track your things, i will keep adding the feature
 
 
 
-
+'''
                         
