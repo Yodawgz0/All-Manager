@@ -19,15 +19,23 @@ It is an app which manages and track your things, i will keep adding the feature
 1. In Phone select the Py file and run it
 2. Connect , after that i can select file and send
 
-'''                                                                  
 
+                                                                     ======================
+                                                                    ||                    ||
+                                                                    ||    Folder Data     ||
+                                                                    ||   To Be Extract    ||
+                                                                    ||                    || 
+                                                                     ======================
+                                                                              /\
+                                                                    < It will be accessed by C >        
+                                                                              \/
                                                                       @@@@@@@@@@@@@@@@@@@@@
-   ======================                                             @                   @
-  ||                    ||    /||                                     @                   @                                     ||\
-  ||    Folder Data     ||   <  ===================================== @     Data Proc.    @ =====================================   > 
-  ||   To Be Extract    ||    \||                                     @        (C)        @                                     ||/
-  ||                    ||                                            @                   @
-   ======================                                             @@@@@@@@@@@@@@@@@@@@@
+                                                                      @                   @
+                                                                      @                   @                                    
+                                                                      @     Data Proc.    @ 
+                                                                      @        (C)        @ 
+                                                                      @                   @
+                                                                      @@@@@@@@@@@@@@@@@@@@@
                                                                                 _
                                                                                / \
                                                                                | |
@@ -54,5 +62,5 @@ It is an app which manages and track your things, i will keep adding the feature
 
 
 
-'''
+
                         
