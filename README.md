@@ -27,7 +27,7 @@ It is an app which manages and track your things, i will keep adding the feature
                                                                     ||                    || 
                                                                      ======================
                                                                               /\
-                                                                    < It will be accessed by C >        
+                                                                   < It will be accessed by C >        
                                                                               \/
                                                                       @@@@@@@@@@@@@@@@@@@@@
                                                                       @                   @
