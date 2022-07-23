@@ -4,7 +4,6 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  Alert,
 } from "react-native";
 import React, { useState } from "react";
 
@@ -13,10 +12,8 @@ const Components = () => {
   const [getdata, ongetdata] = useState("");
 
   async function get_data() {
-    await fetch("http://" + ipAddress + ":5000/Hello")
+    await fetch("http://192.168.1.103:5000/")
       .then((response) => {
-        var ip = request.getRemoteHost();
-        console.log(ip);
         return response.json();
       })
       .then((res) => {
