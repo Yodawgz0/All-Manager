@@ -6,13 +6,14 @@ import {
   TextInput,
 } from "react-native";
 import React, { useState } from "react";
+import dataStore from "../../dataStore.json";
 
 const Components = () => {
   const [numberPin, onChangeNumberPin] = useState("");
   const [getdata, ongetdata] = useState("");
 
   async function get_data() {
-    await fetch("http://192.168.1.103:5000/")
+    await fetch(dataStore.mainData.IPAddr)
       .then((response) => {
         return response.json();
       })

@@ -13,9 +13,8 @@ export const FirstPagestyle = StyleSheet.create({
     fontFamily: "Lucida Console",
   },
   back_image: {
-    flex: 1,
     justifyContent: "center",
-    height: "100vh",
+    height: "120%",
   },
 
   Componenets: {

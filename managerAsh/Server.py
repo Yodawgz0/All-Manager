@@ -3,12 +3,21 @@ from threading import Thread
 from time import sleep
 from flask import Flask, jsonify, request
 import json
+from flask_cors import CORS
 
 connectionestd = True
 hostname=socket.gethostname()   
-IPAddr=socket.gethostbyname(hostname)
+IPAddr=socket.gethostbyname(hostname)   
+
+with open('./dataStore.json', 'r+') as f:
+    mainData = json.load(f)
+    mainData["mainData"]["IPAddr"]= "http://"+str(IPAddr)+":5000/"
+    f.seek(0)
+    json.dump(mainData,f, indent=4)
+
 
 app = Flask(__name__)
+CORS(app)
 @app.route('/', methods = ['GET', 'POST'])
 def request_handler():
     if(request.method == 'GET'):
@@ -16,8 +25,6 @@ def request_handler():
         return jsonify({'data': data})
 
 
-##with open('dataStore.json', 'r') as f:
-##    people = json.load(f)['people']
 
 def TCP_Handler(arg):
     print(">>>>>>>>>>>>> Starting TCP Handler....\n")
