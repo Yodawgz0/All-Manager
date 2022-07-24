@@ -40,14 +40,7 @@ It is an app which manages and track your things, i will keep adding the feature
                                                                                 _
                                                                                / \
                                                                                | |
-                                                                               | |
-                                                                               | |
-                                                                               | |
-                                                                               | | (TCP Connection Estd.)
-                                                                               | |
-                                                                               | |
-                                                                               | |
-                                                                               | |
+                                                                               | |(TCP Connection Estd.)
                                                                                | |
                                                                                \_/
                                                                                 v
