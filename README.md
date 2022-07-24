@@ -10,6 +10,7 @@ It is an app which manages and track your things, i will keep adding the feature
 1. C configure Application with data TXT 
 2. Python JSON connect REST 
 3. React Native Improvments
+4. Make the LoginPage with IP display button
 
 
 ##########################################################################
@@ -59,8 +60,23 @@ It is an app which manages and track your things, i will keep adding the feature
                                   *******************************   RESTful Buttons are added   ***********************************
                                                                  ******************************
 
+                                        ***************************************************************************************
+                                        
+                                                                    |----------> To state which IP is connected
+                                                                    |   
+                                               First Page ==========>
+                                                                    |
+                                                                    |-----------> Enter the Pin and then click enter for LOGIN
+                                                                    
+                                        ***************************************************************************************
+                                         
+                                         
+                                         
+                                               Second Page 
 
+                                                                   
 
+                                                                                
 
 
                         
