@@ -17,13 +17,14 @@ const FirstPage = () => {
         <ImageBackground
           source={require("../../assets/back_omg.jpg")}
           style={FirstPagestyle.back_image}
+          resizeMode="cover"
         >
           <View style={FirstPagestyle.mainSheetStyle}>
             <StatusBar backgroundColor="grey" />
 
             <Text style={FirstPagestyle.textStyle}>
               {" "}
-              Welcome! <br /> Please Enter the Pin{" "}
+              Welcome!{"\n"}Please Enter the Pin{" "}
             </Text>
           </View>
           <View style={FirstPagestyle.Componenets}>

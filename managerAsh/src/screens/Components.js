@@ -1,12 +1,7 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { Text, View, TouchableOpacity, TextInput, Alert } from "react-native";
 import React, { useState } from "react";
 import dataStore from "../../dataStore.json";
+import { FirstPagestyle } from "../stylesFiles/FirstPageStyle";
 
 const Components = () => {
   const [numberPin, onChangeNumberPin] = useState("");
@@ -21,63 +16,50 @@ const Components = () => {
         ongetdata(res.data);
       });
   }
-
+  const showAlert = () => {
+    Alert.alert("Alert Title", "My Alert Msg", [
+      {
+        text: "Ask me later",
+        onPress: () => console.log("Ask me later pressed"),
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
+  };
   return (
     <View>
+      <TextInput
+        style={FirstPagestyle.TextInput}
+        onChangeText={onChangeNumberPin}
+        value={numberPin}
+        placeholder="Enter The Pin"
+        keyboardType="numeric"
+        textAlign="center"
+      />
       <TouchableOpacity
-        style={styles.FirstPageButton}
-        onPress={() => {
-          get_data();
-        }}
-      >
-        <Text style={styles.FirstPageButtonText}>{getdata}</Text>
-        <Text style={styles.FirstPageButtonText}>Get</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.FirstPageButton}
-        onPress={() => {
-          console.log("Hello");
-        }}
-      >
-        <TextInput
-          style={styles.TextInput}
-          onChangeText={onChangeNumberPin}
-          value={numberPin}
-          placeholder="Enter The Pin"
-          keyboardType="numeric"
-        />
-        <Text style={styles.FirstPageButtonText}>Send</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.FirstPageButton}
+        style={FirstPagestyle.FirstPageButton}
         onPress={() => {
           console.log("Hello");
         }}
       >
-        <Text style={styles.FirstPageButtonText}>Show</Text>
+        <Text style={FirstPagestyle.FirstPageButtonText}>Validate</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={FirstPagestyle.FirstPageButtonGetData}
+        onPress={() => {
+          showAlert();
+        }}
+      >
+        <Text style={FirstPagestyle.FirstPageButtonText}>
+          Connection Details
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  TextInput: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    color: "white",
-  },
-  FirstPageButton: {
-    alignItems: "center",
-    backgroundColor: "#190979",
-    padding: 20,
-    marginTop: 100,
-    borderRadius: 25,
-  },
-  FirstPageButtonText: {
-    color: "pink",
-  },
-});
 
 export default Components;

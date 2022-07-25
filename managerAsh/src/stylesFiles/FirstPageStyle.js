@@ -10,17 +10,45 @@ export const FirstPagestyle = StyleSheet.create({
   textStyle: {
     color: "white",
     fontSize: 30,
-    fontFamily: "Lucida Console",
+    fontFamily: "cherry-swash",
   },
   back_image: {
-    justifyContent: "center",
-    height: "120%",
+    width: "100%", // applied to Image
+    height: "100%",
   },
 
   Componenets: {
-    height: "80vh",
     display: "flex",
+    justifyContent: "space-around",
+  },
+  TextInput: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    color: "white",
+    marginTop: 180,
+    marginLeft: "25%",
+    marginRight: "25%",
+  },
+  FirstPageButtonGetData: {
     alignItems: "center",
-    justifyContent: "space-arounf",
+    backgroundColor: "#1f3d7a",
+    padding: 20,
+    borderRadius: 25,
+    marginTop: "78%",
+    marginRight: 220,
+    marginLeft: 30,
+  },
+  FirstPageButton: {
+    alignItems: "center",
+    backgroundColor: "#190979",
+    padding: 20,
+    borderRadius: 25,
+    marginLeft: "30%",
+    marginRight: "30%",
+  },
+  FirstPageButtonText: {
+    color: "pink",
   },
 });
