@@ -21,10 +21,17 @@ CORS(app)
 @app.route('/', methods = ['GET', 'POST'])
 def request_handler():
     if(request.method == 'GET'):
-        data = "hello world"
+        data = "Connection is Established"
         return jsonify({'data': data})
-
-
+    if(request.method == 'POST'):
+        data = request.json
+        if "validatePin" in data:
+            if data["validatePin"] == "123456":
+                print("PIN correct was Sent")
+                return jsonify({'PIN': "Correct"})
+            else:
+                print("PIN Wrong was Sent")
+                return jsonify({'PIN': "Wrong"})
 
 def TCP_Handler(arg):
     print(">>>>>>>>>>>>> Starting TCP Handler....\n")
@@ -47,7 +54,7 @@ def TCP_Handler(arg):
 
         while(connectionestd):
             print(">>>>>>>>>>>>> Sending Data\n")
-            s.sendall(b"Hello, world")
+            s.sendall(b"You are not connected to Python")
             data = s.recv(1024)
 
             print(f">>>>>>>>>>>>> Received {data!r}\n")
