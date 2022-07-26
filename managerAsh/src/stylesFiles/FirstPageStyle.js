@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export const FirstPagestyle = StyleSheet.create({
   mainSheetStyle: {
@@ -9,17 +9,15 @@ export const FirstPagestyle = StyleSheet.create({
   },
   textStyle: {
     color: "white",
-    fontSize: 30,
-    fontFamily: "cherry-swash",
+    fontSize: 40,
+    marginTop: 50,
+    fontFamily: "CherrySwash_400Regular",
   },
   back_image: {
-    width: "100%", // applied to Image
     height: "100%",
   },
-
   Componenets: {
     display: "flex",
-    justifyContent: "space-around",
   },
   TextInput: {
     height: 40,
@@ -36,7 +34,7 @@ export const FirstPagestyle = StyleSheet.create({
     backgroundColor: "#1f3d7a",
     padding: 20,
     borderRadius: 25,
-    marginTop: "78%",
+    marginTop: "70%",
     marginRight: 220,
     marginLeft: 30,
   },
