@@ -6,6 +6,38 @@ import { FirstPagestyle } from "../stylesFiles/FirstPageStyle";
 const Components = () => {
   const [numberPin, onChangeNumberPin] = useState("");
   const [getdata, ongetdata] = useState("");
+  const [validateResp, onvalidateResp] = useState("");
+
+  async function sendPinVerify() {
+    await fetch(dataStore.mainData.IPAddr, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ validatePin: numberPin }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        onvalidateResp(res.PIN);
+        if (validateResp == "Wrong") {
+          Alert.alert("OOPS!!", "PIN WAS WRONG!!!", [
+            {
+              text: "OK",
+              onPress: () => console.log("PIN WAS WRONG"),
+            },
+          ]);
+        }
+        if (validateResp == "Correct") {
+          console.log("PIN was correct");
+        }
+      })
+      .catch((err) => {
+        ongetdata(err);
+      });
+  }
 
   async function get_data() {
     await fetch(dataStore.mainData.IPAddr)
@@ -14,21 +46,24 @@ const Components = () => {
       })
       .then((res) => {
         ongetdata(res.data);
+      })
+      .catch((err) => {
+        ongetdata(err);
       });
   }
+
   const showAlert = () => {
-    Alert.alert("Alert Title", "My Alert Msg", [
-      {
-        text: "Ask me later",
-        onPress: () => console.log("Ask me later pressed"),
-      },
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
+    get_data();
+    Alert.alert(
+      "Connection Details:",
+      dataStore.mainData.IPAddr + "\n" + getdata,
+      [
+        {
+          text: "OK",
+          onPress: () => console.log("Connection Status was Viewed"),
+        },
+      ]
+    );
   };
   return (
     <View>
@@ -39,11 +74,12 @@ const Components = () => {
         placeholder="Enter The Pin"
         keyboardType="numeric"
         textAlign="center"
+        secureTextEntry={true}
       />
       <TouchableOpacity
         style={FirstPagestyle.FirstPageButton}
         onPress={() => {
-          console.log("Hello");
+          sendPinVerify();
         }}
       >
         <Text style={FirstPagestyle.FirstPageButtonText}>Validate</Text>
