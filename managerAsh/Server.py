@@ -54,7 +54,7 @@ def TCP_Handler(arg):
 
         while(connectionestd):
             print(">>>>>>>>>>>>> Sending Data\n")
-            s.sendall(b"You are not connected to Python")
+            s.sendall(b"You are now connected to Python \n")
             data = s.recv(1024)
 
             print(f">>>>>>>>>>>>> Received {data!r}\n")
