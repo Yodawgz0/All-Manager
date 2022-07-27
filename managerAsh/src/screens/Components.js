@@ -1,13 +1,46 @@
 import { Text, View, TouchableOpacity, TextInput, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dataStore from "../../dataStore.json";
 import { FirstPagestyle } from "../stylesFiles/FirstPageStyle";
 
-const Components = () => {
+const Components = ({ navigation }) => {
   const [numberPin, onChangeNumberPin] = useState("");
   const [getdata, ongetdata] = useState("");
   const [validateResp, onvalidateResp] = useState("");
+  useEffect(() => {
+    console.log(validateResp);
+    if (validateResp == "Wrong") {
+      Alert.alert("OOPS!!", "PIN WAS WRONG!!!", [
+        {
+          text: "OK",
+          onPress: () => console.log("PIN WAS WRONG"),
+        },
+      ]);
+    } else if (validateResp == "Correct") {
+      Alert.alert("YAY!!", "PIN WAS Correct!!!", [
+        {
+          text: "OK",
+          onPress: () => console.log("PIN WAS Correct"),
+        },
+      ]);
+      navigation.navigate("mainPage");
+    }
+  }, [validateResp]);
 
+  useEffect(() => {
+    if (getdata) {
+      Alert.alert(
+        "Connection Details:",
+        dataStore.mainData.IPAddr + "\n" + getdata,
+        [
+          {
+            text: "OK",
+            onPress: () => console.log("Connection Status was Viewed"),
+          },
+        ]
+      );
+    }
+  }, [getdata]);
   async function sendPinVerify() {
     await fetch(dataStore.mainData.IPAddr, {
       method: "post",
@@ -22,17 +55,7 @@ const Components = () => {
       })
       .then((res) => {
         onvalidateResp(res.PIN);
-        if (validateResp == "Wrong") {
-          Alert.alert("OOPS!!", "PIN WAS WRONG!!!", [
-            {
-              text: "OK",
-              onPress: () => console.log("PIN WAS WRONG"),
-            },
-          ]);
-        }
-        if (validateResp == "Correct") {
-          console.log("PIN was correct");
-        }
+        onvalidateResp("");
       })
       .catch((err) => {
         ongetdata(err);
@@ -52,19 +75,6 @@ const Components = () => {
       });
   }
 
-  const showAlert = () => {
-    get_data();
-    Alert.alert(
-      "Connection Details:",
-      dataStore.mainData.IPAddr + "\n" + getdata,
-      [
-        {
-          text: "OK",
-          onPress: () => console.log("Connection Status was Viewed"),
-        },
-      ]
-    );
-  };
   return (
     <View>
       <TextInput
@@ -87,7 +97,8 @@ const Components = () => {
       <TouchableOpacity
         style={FirstPagestyle.FirstPageButtonGetData}
         onPress={() => {
-          showAlert();
+          get_data();
+          ongetdata("");
         }}
       >
         <Text style={FirstPagestyle.FirstPageButtonText}>
