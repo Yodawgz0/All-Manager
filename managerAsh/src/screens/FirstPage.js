@@ -6,7 +6,7 @@ import { useFonts } from "expo-font";
 import Apploading from "expo-app-loading";
 import { CherrySwash_400Regular } from "@expo-google-fonts/cherry-swash";
 
-const FirstPage = () => {
+const FirstPage = ({ navigation }) => {
   let [fontsload] = useFonts({
     CherrySwash_400Regular,
   });
@@ -29,7 +29,7 @@ const FirstPage = () => {
           </Text>
         </View>
         <View style={FirstPagestyle.Componenets}>
-          <Components />
+          <Components navigation={navigation} />
         </View>
       </ImageBackground>
     </View>
