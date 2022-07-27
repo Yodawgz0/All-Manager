@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 export const FirstPagestyle = StyleSheet.create({
   mainSheetStyle: {
@@ -26,8 +26,7 @@ export const FirstPagestyle = StyleSheet.create({
     padding: 10,
     color: "white",
     marginTop: 180,
-    marginLeft: "25%",
-    marginRight: "25%",
+    marginHorizontal: "25%",
   },
   FirstPageButtonGetData: {
     alignItems: "center",
@@ -43,10 +42,10 @@ export const FirstPagestyle = StyleSheet.create({
     backgroundColor: "#190979",
     padding: 20,
     borderRadius: 25,
-    marginLeft: "30%",
-    marginRight: "30%",
+    marginHorizontal: "30%",
   },
   FirstPageButtonText: {
     color: "pink",
+    fontFamily: "CherrySwash_400Regular",
   },
 });
