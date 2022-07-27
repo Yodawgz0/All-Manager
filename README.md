@@ -11,13 +11,6 @@ It is an app which manages and track your things, i will keep adding the feature
 2. Python JSON connect REST (GET POST Done)
 3. React Native Improvments
 4. Make the LoginPage with IP display button (Done)
-5. Think what is going to next page:
-          1. Counter
-          2. Todo List
-          3. File Transfer
-          4. Calender
-          5. EMAILS???
-          6. Are there some cool APIs of other Apps
           
 
 ##########################################################################
@@ -71,8 +64,12 @@ It is an app which manages and track your things, i will keep adding the feature
                                         **********************************=      ||     =**************************************
                                                                     <<< React Router Navigation >>>
                                          
-                                         
-                                               Second Page 
+                                                                    |-----> Text Reader
+                                                                    |
+                                               Second Page =========>-----> Music Player
+                                                                    |
+                                                                    |-----> Todo List
+                                                                    
 
                                                                    
 
