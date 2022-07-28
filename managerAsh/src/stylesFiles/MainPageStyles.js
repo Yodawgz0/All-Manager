@@ -14,15 +14,19 @@ export const MainPagestyle = StyleSheet.create({
     alignItems: "center",
   },
   ButtonLayout: {
-    marginHorizontal: "25%",
+    flexDirection: "column",
+    alignItems: "center",
   },
   ButtonOptions: {
     padding: 20,
+    paddingHorizontal: 55,
     borderRadius: 25,
+    marginTop: "30%",
     backgroundColor: "#190979",
   },
   ButtonOptionsText: {
     color: "pink",
+    fontSize: 20,
     fontFamily: "CherrySwash_400Regular",
   },
 });
