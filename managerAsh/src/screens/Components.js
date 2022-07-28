@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity, TextInput, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import dataStore from "../../dataStore.json";
 import { FirstPagestyle } from "../stylesFiles/FirstPageStyle";
+import * as Haptics from "expo-haptics";
 
 const Components = ({ navigation }) => {
   const [numberPin, onChangeNumberPin] = useState("");
@@ -10,6 +11,7 @@ const Components = ({ navigation }) => {
   useEffect(() => {
     console.log(validateResp);
     if (validateResp == "Wrong") {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
       Alert.alert("OOPS!!", "PIN WAS WRONG!!!", [
         {
           text: "OK",
@@ -17,6 +19,7 @@ const Components = ({ navigation }) => {
         },
       ]);
     } else if (validateResp == "Correct") {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       Alert.alert("YAY!!", "PIN WAS Correct!!!", [
         {
           text: "OK",
@@ -97,6 +100,7 @@ const Components = ({ navigation }) => {
       <TouchableOpacity
         style={FirstPagestyle.FirstPageButtonGetData}
         onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           get_data();
           ongetdata("");
         }}
