@@ -1,18 +1,21 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { MainPagestyle } from "../stylesFiles/MainPageStyles";
-
-const MainPageComponents = () => {
+import * as Haptics from "expo-haptics";
+const MainPageComponents = (props) => {
+  const pressHandler = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (props.title == "Text Reader") {
+      props.navigation.navigate("TextReaderScreen");
+    }
+  };
   return (
     <View style={MainPagestyle.ButtonLayout}>
-      <TouchableOpacity style={MainPagestyle.ButtonOptions}>
-        <Text>Text Reader</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={MainPagestyle.ButtonOptions}>
-        <Text>Play Music</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={MainPagestyle.ButtonOptions}>
-        <Text>Tracker Items</Text>
+      <TouchableOpacity
+        style={MainPagestyle.ButtonOptions}
+        onPress={() => pressHandler()}
+      >
+        <Text style={MainPagestyle.ButtonOptionsText}>{props.title}</Text>
       </TouchableOpacity>
     </View>
   );
