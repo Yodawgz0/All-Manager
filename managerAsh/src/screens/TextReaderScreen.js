@@ -3,8 +3,9 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  Button,
   Image,
+  Button,
+  Modal,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { TextReaderStyle } from "../stylesFiles/TextReaderStyle";
@@ -12,22 +13,22 @@ import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { shareAsync } from "expo-sharing";
 import { MaterialIcons } from "@expo/vector-icons";
+import TextReaderComponent from "./InbuiltScreens/TextReaderComponent";
 
 const TextReaderScreen = (props) => {
-  let cameraRef = useRef();
   const [hasCameraPermissions, onHasCameraPermissions] = useState();
   const [hasMediaPermissions, onHasMediaPermissions] = useState();
   const [photo, setPhoto] = useState();
   const [cameraType, setcameraType] = useState(CameraType.back);
-
+  let cameraRef = useRef();
+  let AfterImage = false;
   useEffect(() => {
-    async () => {
-      console.log("hello");
-    };
-  }, []);
+    if (photo) {
+      AfterImage = true;
+    }
+  }, [photo]);
 
   const flipCamera = () => {
-    console.log(cameraType);
     if (cameraType == "back") {
       setcameraType(CameraType.front);
     } else {
@@ -40,9 +41,9 @@ const TextReaderScreen = (props) => {
     const mediaPermissions = await MediaLibrary.requestPermissionsAsync();
     onHasCameraPermissions(cameraPermissions.status == "granted");
     onHasMediaPermissions(mediaPermissions.status == "granted");
-    if (hasCameraPermissions == null) {
+    if (hasCameraPermissions == undefined || hasMediaPermissions == undefined) {
       return <Text>Requesting Permission...</Text>;
-    } else if (!hasCameraPermissions) {
+    } else if (!hasCameraPermissions || !hasMediaPermissions) {
       return <Text>Please enable the permission</Text>;
     }
     let options = {
@@ -55,33 +56,17 @@ const TextReaderScreen = (props) => {
     setPhoto(newPhoto);
   };
 
-  if (photo) {
-    let sharePic = () => {
-      shareAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
-    };
+  let sharePic = () => {
+    shareAsync(photo.uri).then(() => {
+      setPhoto(undefined);
+    });
+  };
 
-    let savePhoto = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
-    };
-
-    return (
-      <View>
-        <Image
-          style={TextReaderStyle.preview}
-          source={{ uri: "data:image/jpg;base64," + photo.base64 }}
-        />
-        <Button title="Share" onPress={sharePic} />
-        {hasMediaPermissions ? (
-          <Button title="Save" onPress={savePhoto} />
-        ) : undefined}
-        <Button title="Discard" onPress={() => setPhoto(undefined)} />
-      </View>
-    );
-  }
+  let savePhoto = () => {
+    MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
+      setPhoto(undefined);
+    });
+  };
 
   return (
     <View>
@@ -93,7 +78,7 @@ const TextReaderScreen = (props) => {
         <Camera
           style={TextReaderStyle.cameraContainer}
           ref={cameraRef}
-          cameraType={cameraType}
+          type={cameraType}
         >
           <TouchableOpacity
             style={TextReaderStyle.cameraButton}
@@ -103,9 +88,22 @@ const TextReaderScreen = (props) => {
             style={TextReaderStyle.cameraFlip}
             onPress={() => flipCamera()}
           >
-            <MaterialIcons name="flip-camera-ios" size={24} color="white" />
+            <MaterialIcons name="flip-camera-ios" size={34} color="white" />
           </TouchableOpacity>
         </Camera>
+        <Modal visible={AfterImage}>
+          <View>
+            <Image
+              style={TextReaderStyle.preview}
+              source={{ uri: "data:image/jpg;base64," }}
+            />
+            <Button title="Share" onPress={sharePic} />
+            {hasMediaPermissions ? (
+              <Button title="Save" onPress={savePhoto} />
+            ) : undefined}
+            <Button title="Discard" onPress={() => setPhoto(undefined)} />
+          </View>
+        </Modal>
       </ImageBackground>
     </View>
   );
