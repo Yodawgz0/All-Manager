@@ -24,8 +24,13 @@ export const TextReaderStyle = StyleSheet.create({
     alignItems: "center",
   },
   preview: {
-    alignSelf: "stretch",
-    flex: 1,
+    flex: 0.5,
+    alignItems: "center",
+    backgroundColor: "blue",
+    margin: 0,
+  },
+  Modalpreview: {
+    marginTop: 10,
   },
   cameraFlip: {
     marginLeft: "70%",
