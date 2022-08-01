@@ -1,5 +1,4 @@
 import {
-  Text,
   TouchableOpacity,
   View,
   ImageBackground,
@@ -13,7 +12,7 @@ import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { shareAsync } from "expo-sharing";
 import { MaterialIcons } from "@expo/vector-icons";
-import TextReaderComponent from "./InbuiltScreens/TextReaderComponent";
+import dataStore from "../../dataStore.json";
 
 const TextReaderScreen = (props) => {
   const [hasCameraPermissions, onHasCameraPermissions] = useState();
@@ -21,12 +20,14 @@ const TextReaderScreen = (props) => {
   const [photo, setPhoto] = useState();
   const [cameraType, setcameraType] = useState(CameraType.back);
   let cameraRef = useRef();
-  let AfterImage = false;
+
   useEffect(() => {
-    if (photo) {
-      AfterImage = true;
+    if (hasCameraPermissions == undefined || hasMediaPermissions == undefined) {
+      //return <Text>Requesting Permission...</Text>;
+    } else if (!hasCameraPermissions || !hasMediaPermissions) {
+      //return <Text>Please enable the permission</Text>;
     }
-  }, [photo]);
+  }, [photo, hasCameraPermissions, hasMediaPermissions]);
 
   const flipCamera = () => {
     if (cameraType == "back") {
@@ -38,14 +39,11 @@ const TextReaderScreen = (props) => {
 
   let takePic = async () => {
     const cameraPermissions = await Camera.requestCameraPermissionsAsync();
+
     const mediaPermissions = await MediaLibrary.requestPermissionsAsync();
     onHasCameraPermissions(cameraPermissions.status == "granted");
     onHasMediaPermissions(mediaPermissions.status == "granted");
-    if (hasCameraPermissions == undefined || hasMediaPermissions == undefined) {
-      return <Text>Requesting Permission...</Text>;
-    } else if (!hasCameraPermissions || !hasMediaPermissions) {
-      return <Text>Please enable the permission</Text>;
-    }
+
     let options = {
       quality: 1,
       base64: true,
@@ -53,9 +51,9 @@ const TextReaderScreen = (props) => {
     };
 
     let newPhoto = await cameraRef.current.takePictureAsync(options);
+
     setPhoto(newPhoto);
   };
-
   let sharePic = () => {
     shareAsync(photo.uri).then(() => {
       setPhoto(undefined);
@@ -67,6 +65,29 @@ const TextReaderScreen = (props) => {
       setPhoto(undefined);
     });
   };
+
+  async function sendPicProcess() {
+    console.log("hello");
+    await fetch(dataStore.mainData.IPAddr, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ photo: photo.base64 }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
+        //onvalidateResp(res.TEXT);
+        //onvalidateResp("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <View>
@@ -91,19 +112,25 @@ const TextReaderScreen = (props) => {
             <MaterialIcons name="flip-camera-ios" size={34} color="white" />
           </TouchableOpacity>
         </Camera>
-        <Modal visible={AfterImage}>
-          <View>
+        {photo != undefined ? (
+          <Modal style={TextReaderStyle.Modalpreview} animationType="slide">
             <Image
               style={TextReaderStyle.preview}
-              source={{ uri: "data:image/jpg;base64," }}
+              source={{ uri: "data:image/jpg;base64," + photo.base64 }}
             />
             <Button title="Share" onPress={sharePic} />
             {hasMediaPermissions ? (
-              <Button title="Save" onPress={savePhoto} />
+              <Button
+                title="Save"
+                onPress={() => {
+                  savePhoto();
+                  sendPicProcess();
+                }}
+              />
             ) : undefined}
             <Button title="Discard" onPress={() => setPhoto(undefined)} />
-          </View>
-        </Modal>
+          </Modal>
+        ) : null}
       </ImageBackground>
     </View>
   );
