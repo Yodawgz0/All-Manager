@@ -4,6 +4,12 @@ from time import sleep
 from flask import Flask, jsonify, request
 import json
 from flask_cors import CORS
+import base64
+from PIL import Image
+import io
+from PIL import Image
+from pytesseract import pytesseract
+
 
 connectionestd = True
 hostname=socket.gethostname()   
@@ -25,6 +31,7 @@ def request_handler():
         return jsonify({'data': data})
     if(request.method == 'POST'):
         data = request.json
+        
         if "validatePin" in data:
             if data["validatePin"] == "123456":
                 print("PIN correct was Sent")
@@ -32,6 +39,13 @@ def request_handler():
             else:
                 print("PIN Wrong was Sent")
                 return jsonify({'PIN': "Wrong"})
+        img = Image.open(io.BytesIO(base64.decodebytes(bytes(str(data["photo"]), "utf-8"))))
+        img.save('TextReadingImage.jpg')
+        print("Image is saved! as TextReadingImage.jpg\n")
+        img = Image.open('TextReadingImage.jpg')
+        text = pytesseract.image_to_string(img)
+        print(text)
+       
 
 def TCP_Handler(arg):
     print(">>>>>>>>>>>>> Starting TCP Handler....\n")
