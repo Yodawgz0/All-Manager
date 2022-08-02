@@ -8,12 +8,13 @@ import base64
 from PIL import Image
 import io
 from PIL import Image
-from pytesseract import pytesseract
 
 
 connectionestd = True
 hostname=socket.gethostname()   
-IPAddr=socket.gethostbyname(hostname)   
+IPAddr=socket.gethostbyname(hostname)
+
+global_process_list = []
 
 with open('./dataStore.json', 'r+') as f:
     mainData = json.load(f)
@@ -26,6 +27,8 @@ app = Flask(__name__)
 CORS(app)
 @app.route('/', methods = ['GET', 'POST'])
 def request_handler():
+    global global_process_list
+    
     if(request.method == 'GET'):
         data = "Connection is Established"
         return jsonify({'data': data})
@@ -41,13 +44,15 @@ def request_handler():
                 return jsonify({'PIN': "Wrong"})
         img = Image.open(io.BytesIO(base64.decodebytes(bytes(str(data["photo"]), "utf-8"))))
         img.save('TextReadingImage.jpg')
-        print("Image is saved! as TextReadingImage.jpg\n")
-        img = Image.open('TextReadingImage.jpg')
-        text = pytesseract.image_to_string(img)
-        print(text)
-       
+        
+        global_process_list.append(["image",data["photo"]])
+        return jsonify("Image is saved! as TextReadingImage.jpg \nBeing sent to PC.....\n")
+        
 
 def TCP_Handler(arg):
+    global global_process_list
+
+    
     print(">>>>>>>>>>>>> Starting TCP Handler....\n")
     HOST = IPAddr  # The server's hostname or IP address
     PORT = 4000  # The port used by the server
@@ -65,13 +70,29 @@ def TCP_Handler(arg):
             else:
                 break
         print(f">>>>>>>>>>>>> Connection estd on the IP {IPAddr}....\n")
+        print(">>>>>>>>>>>>> Sending Data\n")
+        #s.sendall(b"You are now connected to Python")
+        s.sendall(b"ImageRecv")
+        data = s.recv(1024)
+        print(f">>>>>>>>>>>>> Received {data!r}\n")
+        
 
         while(connectionestd):
-            print(">>>>>>>>>>>>> Sending Data\n")
-            s.sendall(b"You are now connected to Python \n")
-            data = s.recv(1024)
-
-            print(f">>>>>>>>>>>>> Received {data!r}\n")
+            print("Waiting for Data....\n")
+            if(len(global_process_list)>0):
+                data_process = global_process_list[0][0]
+                if data_process == "image":
+                    print(">>>>>>>>>>>>> Sending Image to PC")
+                    s.sendall(b'ImageRecv')
+                    data_verify_forImage = s.recv(1024)
+                    print(f">>>>>>>>>>>>> Received {data!r}\n")
+                    if data_verify_forImage == b'SendImage':
+                        s.sendall(global_process_list[0][0])
+                    else:
+                        print(">>>>>>>>>>>>> Retry Sending the Image from Server")
+                        continue
+                    data_verify_forImage = s.recv(1024)
+                    print(f">>>>>>>>>>>>> Received {data!r}\n")
             sleep(0.5)
 
 
