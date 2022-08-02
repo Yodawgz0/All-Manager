@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <winsock2.h>
 #include <stdlib.h>
+#include <string.h>
 
 #pragma comment(lib, "ws2_32.lib") // Winsock Library
 
@@ -99,6 +100,12 @@ int main(int argc, char *argv[])
 			return 1;
 		}
 		printf("%s\n", server_reply);
+		if (server_reply == "ImageRecv")
+		{
+
+			send(new_socket, "SendImage", strlen(message), 0);
+		}
+		// printf("%s\n", server_reply);
 		message = "You are now connected to the Laptop , What is going to be your Next Move!! \n";
 		send(new_socket, message, strlen(message), 0);
 	}
