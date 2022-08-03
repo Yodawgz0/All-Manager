@@ -112,6 +112,7 @@ const TextReaderScreen = (props) => {
             <MaterialIcons name="flip-camera-ios" size={34} color="white" />
           </TouchableOpacity>
         </Camera>
+
         {photo != undefined ? (
           <Modal style={TextReaderStyle.Modalpreview} animationType="slide">
             <Image
