@@ -7,6 +7,8 @@ const MainPageComponents = (props) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (props.title == "Text Reader") {
       props.navigation.navigate("TextReaderScreen");
+    } else if (props.title == "Music Player") {
+      props.navigation.navigate("MusicPlayerPage");
     }
   };
   return (
