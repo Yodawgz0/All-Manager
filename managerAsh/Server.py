@@ -72,13 +72,12 @@ def TCP_Handler(arg):
         print(f">>>>>>>>>>>>> Connection estd on the IP {IPAddr}....\n")
         print(">>>>>>>>>>>>> Sending Data\n")
         #s.sendall(b"You are now connected to Python")
-        s.sendall(b"ImageRecv")
+        s.sendall(b"You are now connected to Python")
         data = s.recv(1024)
         print(f">>>>>>>>>>>>> Received {data!r}\n")
         
 
         while(connectionestd):
-            print("Waiting for Data....\n")
             if(len(global_process_list)>0):
                 data_process = global_process_list[0][0]
                 if data_process == "image":
