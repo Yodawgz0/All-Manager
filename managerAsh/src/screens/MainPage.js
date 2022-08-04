@@ -14,7 +14,7 @@ const MainPage = ({ navigation }) => {
           <Text style={MainPagestyle.textStyle}>Select!{"\n"}The Option </Text>
         </View>
         <MainPageComponents title="Text Reader" navigation={navigation} />
-        <MainPageComponents title="Play Music" />
+        <MainPageComponents title="Music Player" navigation={navigation} />
         <MainPageComponents title="Items Tracker" />
       </ImageBackground>
     </View>
